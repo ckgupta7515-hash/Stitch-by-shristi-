@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stitch by Shristi</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#fdf8f5;
+}
+
+/* NAVBAR */
+nav{
+background:#fff;
+padding:15px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo{
+color:#bb377d;
+font-size:22px;
+font-weight:700;
+}
+
+.cart-icon{
+cursor:pointer;
+position:relative;
+font-size:20px;
+}
+
+.cart-count{
+position:absolute;
+top:-8px;
+right:-10px;
+background:#bb377d;
+color:white;
+font-size:12px;
+padding:3px 7px;
+border-radius:50%;
+}
+
+/* HERO */
+.hero{
+text-align:center;
+padding:80px 20px;
+background:linear-gradient(135deg,#fbd3e9,#bb377d);
+color:white;
+}
+
+.search-box{
+margin-top:20px;
+}
+
+.search-box input{
+padding:12px 20px;
+width:280px;
+border-radius:30px;
+border:none;
+outline:none;
+}
+
+/* PRODUCTS */
+.products{
+padding:50px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:30px;
+}
+
+.card{
+background:white;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+cursor:pointer;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+}
+
+.card img{
+width:100%;
+aspect-ratio:1/1;
+object-fit:cover;
+}
+
+.card-content{
+padding:20px;
+text-align:center;
+}
+
+.price{
+color:#bb377d;
+font-weight:600;
+margin:8px 0;
+}
+
+/* EXPAND */
+.details{
+max-height:0;
+overflow:hidden;
+transition:0.4s ease;
+}
+
+.card.active .details{
+max-height:300px;
+margin-top:10px;
+}
+
+/* BUTTONS */
+.btn{
+padding:8px 15px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+font-size:13px;
+margin:5px;
+}
+
+.add-btn{
+background:#bb377d;
+color:white;
+}
+
+.order-btn{
+background:#333;
+color:white;
+}
+
+/* CART */
+.cart{
+position:fixed;
+right:-350px;
+top:0;
+width:320px;
+height:100%;
+background:white;
+box-shadow:-5px 0 20px rgba(0,0,0,0.2);
+padding:20px;
+transition:0.4s;
+overflow-y:auto;
+z-index:2000;
+}
+
+.cart.active{
+right:0;
+}
+
+.checkout-btn{
+width:100%;
+padding:10px;
+background:#bb377d;
+color:white;
+border:none;
+border-radius:25px;
+margin-top:15px;
+cursor:pointer;
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+<div class="logo">Stitch by Shristi</div>
+<div class="cart-icon" onclick="toggleCart()">
+🛒
+<span class="cart-count" id="cartCount">0</span>
+</div>
+</nav>
+
+<section class="hero">
+<h2>Handmade With Love ❤️</h2>
+<p>Crochet | Jewellery | Decorative | Goggle Case</p>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+</div>
+</section>
+
+<section class="products">
+
+<div class="card" data-name="crochet flower pot" onclick="toggleCard(this)">
+<img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952">
+<div class="card-content">
+<h3>Crochet Flower Pot</h3>
+<p class="price">₹499</p>
+
+<div class="details">
+<p>Beautiful handmade decor item perfect for gifting and home decoration.</p>
+<button class="btn add-btn" onclick="addToCart(event,'Crochet Flower Pot',499)">Add to Cart</button>
+<button class="btn order-btn" onclick="orderNow(event,'Crochet Flower Pot',499)">Place Order</button>
+</div>
+
+</div>
+</div>
+
+<div class="card" data-name="handmade goggle case" onclick="toggleCard(this)">
+<img src="https://images.unsplash.com/photo-1585386959984-a4155224f0a8">
+<div class="card-content">
+<h3>Handmade Goggle Case</h3>
+<p class="price">₹299</p>
+
+<div class="details">
+<p>Soft crochet case to protect your sunglasses from scratches.</p>
+<button class="btn add-btn" onclick="addToCart(event,'Handmade Goggle Case',299)">Add to Cart</button>
+<button class="btn order-btn" onclick="orderNow(event,'Handmade Goggle Case',299)">Place Order</button>
+</div>
+
+</div>
+</div>
+
+<div class="card" data-name="handmade jewellery set" onclick="toggleCard(this)">
+<img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf">
+<div class="card-content">
+<h3>Handmade Jewellery Set</h3>
+<p class="price">₹899</p>
+
+<div class="details">
+<p>Elegant handmade jewellery for special occasions.</p>
+<button class="btn add-btn" onclick="addToCart(event,'Handmade Jewellery Set',899)">Add to Cart</button>
+<button class="btn order-btn" onclick="orderNow(event,'Handmade Jewellery Set',899)">Place Order</button>
+</div>
+
+</div>
+</div>
+
+</section>
+
+<div class="cart" id="cart">
+<h2>Your Cart</h2>
+<div id="cartItems"></div>
+<h3 id="totalPrice">Total: ₹0</h3>
+<button class="checkout-btn" onclick="checkout()">Checkout via WhatsApp</button>
+</div>
+
+<script>
+
+let cart=[];
+
+function toggleCard(card){
+card.classList.toggle("active");
+}
+
+function toggleCart(){
+document.getElementById("cart").classList.toggle("active");
+}
+
+function addToCart(event,name,price){
+event.stopPropagation();
+cart.push({name,price});
+updateCart();
+}
+
+function updateCart(){
+let items=document.getElementById("cartItems");
+let count=document.getElementById("cartCount");
+let total=0;
+
+items.innerHTML="";
+cart.forEach((item,index)=>{
+total+=item.price;
+items.innerHTML+=`
+<div>
+${item.name} - ₹${item.price}
+<button onclick="removeItem(${index})">❌</button>
+</div>`;
+});
+
+count.innerText=cart.length;
+document.getElementById("totalPrice").innerText="Total: ₹"+total;
+}
+
+function removeItem(index){
+cart.splice(index,1);
+updateCart();
+}
+
+function orderNow(event,name,price){
+event.stopPropagation();
+let message=`Hello Stitch by Shristi,%0A%0AI want to order:%0AProduct: ${name}%0APrice: ₹${price}%0A%0AMy Delivery Address:%0A`;
+window.open(`https://wa.me/+917857992548?text=${message}`,'_blank');
+}
+
+function checkout(){
+if(cart.length===0){
+alert("Cart is empty!");
+return;
+}
+
+let message="Hello Stitch by Shristi,%0A%0AI want to order:%0A";
+let total=0;
+
+cart.forEach(item=>{
+message+=`• ${item.name} - ₹${item.price}%0A`;
+total+=item.price;
+});
+
+message+=`%0ATotal: ₹${total}%0A%0AMy Delivery Address:%0A`;
+
+window.open(`https://wa.me/+917857992548?text=${message}`,'_blank');
+}
+
+function searchProducts(){
+let input=document.getElementById("searchInput").value.toLowerCase();
+let cards=document.querySelectorAll(".card");
+
+cards.forEach(card=>{
+let name=card.getAttribute("data-name");
+card.style.display=name.includes(input)?"block":"none";
+});
+}
+
+</script>
+
+</body>
+</html>
